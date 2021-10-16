@@ -523,23 +523,7 @@ function toBinOtsu() {
    commitChanges()
 }
 
-let masque = [
-    [-1,-0.5,0],
-    [-0.5,0,0.5],
-    [0,0.5,0.5]
-];
 
-let flouMoyen = [
-  [1/9,1/9,1/9],
-  [1/9,1/9,1/9],
-  [1/9,1/9,1/9]
-]
-
-let flouGaussien = [
-  [1/16,2/16,1/16],
-  [2/16,4/16,2/16],
-  [1/16,2/16,1/16]
-]
 
 let symX = [
   [1,0],
@@ -569,7 +553,8 @@ let blueFinal;
 function filterImage(masque) {
   $('.finished').hide()
 
-  loading("go");
+  console.log("hey",masque)
+
   currentPixels = originalPixels.slice()
 
   console.log('Traitement en cours...')

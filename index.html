@@ -31,6 +31,24 @@
 
      <script> 
         $(document).ready(function() { 
+
+            const masque = [
+                [-1,-0.5,0],
+                [-0.5,0,0.5],
+                [0,0.5,0.5]
+            ];
+
+            const flouMoyen = [
+              [1/9,1/9,1/9],
+              [1/9,1/9,1/9],
+              [1/9,1/9,1/9]
+            ]
+
+            const flouGaussien = [
+              [1/16,2/16,1/16],
+              [2/16,4/16,2/16],
+              [1/16,2/16,1/16]
+            ]
           
             $(".collapse.show").each(function() { 
                 $(this).prev(".card-header").find(".fa") 
@@ -53,7 +71,7 @@
                     grayScale()
                 else if(value === "toInverse()")
                     toInverse()
-                else if(value === "etalement()")
+                else(value === "etalement()")
                     etalement()
             }) 
 
@@ -61,8 +79,26 @@
                 let value = $(this).val()
                 if(value === "toBinSeuillage()")
                     toBinSeuillage()
-                if(value === "toBinOtsu()")
+                else if(value === "toBinOtsu()")
                     toBinOtsu()
+            })
+
+            $(document).on('change','.filter',function(){
+                let value = $(this).val()
+                if(value === "masque"){
+                    console.log(value)
+                    filterImage(masque)
+                }
+                    
+                else if (value === "flouMoyen"){
+                    console.log(value)
+                    filterImage(flouMoyen)
+                }
+                    
+                else if(value === "flouGaussien") {
+                    console.log(value)
+                    filterImage(flouGaussien)
+                }
             })
         }); 
     </script> 
@@ -159,10 +195,11 @@
                                 <ul>
                                     <li>
                                         <label>Filtrage linéaire</label>
-                                        <select id="filter" type="select">
-                                            <option onclick="filterImage(masque)">Convolution discrète</option>
-                                            <option onclick="filterImage(flouMoyen)">Filtre Moyen</option>
-                                            <option onclick="filterImage(flouGaussien)">Filtre Gaussien</option>
+                                        <select id="filter" class="filter" type="select">
+                                            <option>Selectionner...</option>
+                                            <option value="masque">Convolution discrète</option>
+                                            <option value="flouMoyen">Filtre Moyen</option>
+                                            <option value="flouGaussien">Filtre Gaussien</option>
                                         </select>
                                     </li>
                                 </ul> 
