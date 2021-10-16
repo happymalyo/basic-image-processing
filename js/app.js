@@ -80,12 +80,32 @@ function commitChanges() {
 }
 
 function resetImage() {
-	for (let i = 0; i < imgData.data.length; i++) {
-    imgData.data[i] = originalPixels[i]
-  }
 
-  ctx.putImageData(imgData, 0, 0, 0, 0, srcImage.width, srcImage.height)
+	setTimeout(function(){
+      for (let i = 0; i < imgData.data.length; i++) {
+        imgData.data[i] = originalPixels[i]
+      }
+
+      ctx.putImageData(imgData, 0, 0, 0, 0, srcImage.width, srcImage.height)
+  
+   }, 1000);
+
+   $('#previewImg').waitMe({
+            effect : 'bounce',
+            text : '',
+            bg : 'rgba(255,255,255,0.7)',
+            color : '#000',
+            maxSize : '',
+            waitTime : -1,
+            textPos : 'vertical',
+            fontSize : '',
+            source : '',
+            onClose : function() {}
+    });
+
 }
+
+
 
 /*RAZAFIMANDIMBY Tokoto Princila*/
 function grayScale() {
@@ -105,6 +125,7 @@ function grayScale() {
     }
    
     commitChanges()
+    $('#previewImg').waitMe('hide');
 }
 /*RASOAVELO Helene*/
 function toInverse() {
@@ -123,12 +144,27 @@ function toInverse() {
     }
 
     commitChanges()
+    $('#previewImg').waitMe('hide');
 }
 /*RANDRIANANDRASANA Alain Johny*/
 
 
-function toMonochrome() {
+  $('#previewImg').waitMe({
+            effect : 'bounce',
+            text : '',
+            bg : 'rgba(255,255,255,0.7)',
+            color : '#000',
+            maxSize : '',
+            waitTime : -1,
+            textPos : 'vertical',
+            fontSize : '',
+            source : '',
+            onClose : function() {}
+    });
 
+
+async function toMonochrome() {
+ 
 	$('.finished').hide()
    currentPixels = initialPixels.slice()
    let seuil = parseInt(165)
@@ -157,6 +193,7 @@ function toMonochrome() {
     }
          
   commitChanges()
+  $('#previewImg').waitMe('hide');
 }
 /*RASOAVLO Helene*/
 function etalement() {
@@ -194,6 +231,7 @@ function etalement() {
        }
 
     commitChanges()
+    $('#previewImg').waitMe('hide');
 }
 
 /*RANDRIANANDRASANA Tafita Mario*/
@@ -345,6 +383,8 @@ function toEgalization() {
         bleu : pixelFinalBleu
       }
 
+
+
       resolve(pixelFinal);
   });
 }
@@ -393,6 +433,7 @@ async function runEgalisation() {
 
   console.log('Traitement terminé')
   commitChanges()
+  $('#previewImg').waitMe('hide');
 }
 
 function getClosest(elm,tab){
@@ -432,6 +473,7 @@ function toBinSeuillage() {
     }
          
   commitChanges()
+  $('#previewImg').waitMe('hide');
 }
 /*RANDRIANANDRASANA Tafita Mario*/
 function toBinOtsu() {
@@ -521,6 +563,7 @@ function toBinOtsu() {
     }
 
    commitChanges()
+   $('#previewImg').waitMe('hide');
 }
 
 
@@ -595,7 +638,7 @@ function filterImage(masque) {
 
   commitChanges()
   console.log('Traitement terminé')
-  console.log(currentPixels)
+  $('#previewImg').waitMe('hide');
 }
 
 function getCentreX() {
@@ -641,6 +684,7 @@ function retourneX() {
 
   commitChanges()
   console.log('Traitement terminé')
+  $('#previewImg').waitMe('hide');
 }
 /*RANDRIANANDRASANA Alain JOhny*/
 function retourneY() {
@@ -672,6 +716,7 @@ function retourneY() {
 
   commitChanges()
   console.log('Traitement terminé')
+  $('#previewImg').waitMe('hide');
 }
 
 function getIndex(x, y) {

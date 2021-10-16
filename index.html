@@ -15,6 +15,7 @@
       
     <link rel="stylesheet" href= 
 "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+<link rel="stylesheet" href="./css/waitMe.css"> 
       
     <script src= 
 "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
@@ -63,16 +64,23 @@
                     .removeClass("fa-minus").addClass("fa-plus"); 
             });
 
+
             $(document).on('change','.profil',function(){
                 let value = $(this).val()
                 if(value === "toMonochrome()")
-                    toMonochrome()
-                else if(value === "grayScale()")
+                {
+                    
+                    toMonochrome();
+                }
+                else if(value === "grayScale()"){
                     grayScale()
-                else if(value === "toInverse()")
+                }
+                else if(value === "toInverse()"){
                     toInverse()
-                else(value === "etalement()")
+                }
+                else if(value === "etalement()"){
                     etalement()
+                }
             }) 
 
             $(document).on('change','.binarisation',function(){
@@ -86,17 +94,14 @@
             $(document).on('change','.filter',function(){
                 let value = $(this).val()
                 if(value === "masque"){
-                    console.log(value)
                     filterImage(masque)
                 }
                     
                 else if (value === "flouMoyen"){
-                    console.log(value)
                     filterImage(flouMoyen)
                 }
                     
                 else if(value === "flouGaussien") {
-                    console.log(value)
                     filterImage(flouGaussien)
                 }
             })
@@ -117,6 +122,7 @@
 </head>
 <body>
 <div class="wrapper" width="900">
+         <hr>
 		<div id="previewBlock" width="600" >
 			<div id="header" style="background: #1d2224;color: #fff">
 				<u><h5>Importer image</h5></u>
@@ -129,7 +135,7 @@
                     <p class="textInitiale" style="margin-left: 10px">Aperçu de l'image initiale</p>
                     <canvas id="canvas_initial" width="0" height="0"></canvas>
                    </div>
-                   <div class="previewImg">
+                   <div class="previewImg" id="previewImg">
                     <p class="textInitiale" style="margin-left: 10px">Aperçu de l'image transformée</p>
                     <canvas id="canvas" width="0" height="0"></canvas>
                    </div> 
@@ -142,7 +148,7 @@
             <div id="traitementBase">
                 <u><h5>Reglage de base</h5></u>
                 <button class="btn btn-sm btn-primary" onclick="toMonochrome()">Noir et Blanc</button>
-                <button class="btn btn-sm btn-primary" onclick="resetImage()">Reset</button>
+                <button class="btn btn-sm btn-primary" onclick="resetImage()">Reinitialiser</button>
             </div>
 			<div class="accordion"> 
                 <div class="accordion" id="accordionExample"> 
@@ -191,7 +197,7 @@
                         <div class="card-header" id="headingTwo"> 
                             <h2 class="mb-0"> 
                                 <button type="button"
-                                    class="btn btn-link collapsed"
+                                    class="btn btn-link"
                                     data-toggle="collapse"
                                     data-target="#collapseTwo"> 
                                     <i class="fa fa-plus"></i> 
@@ -206,7 +212,7 @@
                                 <ul>
                                     <li>
                                         <label>Filtrage linéaire</label>
-                                        <select id="filter" class="filter" type="select">
+                                        <select type="select" class="filter">
                                             <option>Selectionner...</option>
                                             <option value="masque">Convolution discrète</option>
                                             <option value="flouMoyen">Filtre Moyen</option>
@@ -245,13 +251,14 @@
                         </div> 
                 </div> 
     </div> 
-    <p class="pixels">Taille : <span class="widthImg"></span> x <span class="heightImg"></span> pixels</p>
 
-    <p class="loading">Traitement en cours...</p>
-    <p class="finished">Traitement Terminé</p>
+    <br>
+    <center><i class="footer-title" style="font-size: 0.8rem;">Analyse d'image | Vision par oridinateur</i></center>
+    <span style="color: grey; font-size: 0.9rem;margin-left: 55%; right: 0">Copyright 2021</span>
 </div>
 </div>
 
+<script src="js/waitMe.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
