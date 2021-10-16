@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<title>Traitement d'image</title>
+	 <style> 
+        
+        .accordion .fa { 
+            margin-right: 0.1rem; 
+        } 
+    </style> 
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./css/styles.css">
+	<link rel="stylesheet" href= 
+"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
+      
+    <link rel="stylesheet" href= 
+"https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+      
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+    </script> 
+      
+    <script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> 
+    </script> 
+      
+    <script src= 
+"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> 
+    </script> 
+
+
+     <script> 
+        $(document).ready(function() { 
+          
+            $(".collapse.show").each(function() { 
+                $(this).prev(".card-header").find(".fa") 
+                    .addClass("fa-minus").removeClass("fa-plus"); 
+            }); 
+
+            $(".collapse").on('show.bs.collapse', function() { 
+                $(this).prev(".card-header").find(".fa") 
+                    .removeClass("fa-plus").addClass("fa-minus"); 
+            }).on('hide.bs.collapse', function() { 
+                $(this).prev(".card-header").find(".fa") 
+                    .removeClass("fa-minus").addClass("fa-plus"); 
+            });
+
+            $(document).on('change','.profil',function(){
+                let value = $(this).val()
+                if(value === "toMonochrome()")
+                    toMonochrome()
+                else if(value === "grayScale()")
+                    grayScale()
+                else if(value === "toInverse()")
+                    toInverse()
+                else if(value === "etalement()")
+                    etalement()
+            }) 
+        }); 
+    </script> 
+
+</head>
+<body>
+<div class="wrapper" width="900">
+		<div id="previewBlock" width="600" >
+			<div id="header" style="background: #1d2224;color: #fff">
+				<u><h5>Importer image</h5></u>
+                <input type="file" accept="image/*" id="fileinput" />
+			</div>
+			<div id="body" style="background: #151718;color: #fff">
+				
+				
+			       <div class="initialImg">
+                    <p class="textInitiale" style="margin-left: 10px">Aperçu de l'image initiale</p>
+                    <canvas id="canvas_initial" width="0" height="0"></canvas>
+                   </div>
+                   <div class="previewImg">
+                    <p class="textInitiale" style="margin-left: 10px">Aperçu de l'image transformée</p>
+                    <canvas id="canvas" width="0" height="0"></canvas>
+                   </div> 
+			</div>
+			<div id="footer" style="background: #1d2224;color: #fff;padding: 5px;">
+				<p class="pixels" display="none"><span class="widthImg"></span> x <span class="heightImg"></span> pixels</p>
+			</div>
+		</div>
+		<div id="settingBlock" width="300" style="background: #1d2224;color: #fff">
+            <div id="traitementBase">
+                <u><h5>Reglage de base</h5></u>
+                <button class="btn btn-sm btn-primary" onclick="toMonochrome()">Noir et Blanc</button>
+                <button class="btn btn-sm btn-primary" onclick="resetImage()">Reset</button>
+            </div>
+			<div class="accordion"> 
+                <div class="accordion" id="accordionExample"> 
+                        <div class="card-header" id="headingOne"> 
+                            <h2 class="mb-0"> 
+                                <button type="button"
+                                    class="btn btn-link"
+                                    data-toggle="collapse"
+                                    data-target="#collapseOne"> 
+                                    <i class="fa fa-plus"></i> 
+                                    Transformations ponctuelles
+                                </button>                                  
+                            </h2> 
+                        </div> 
+                          
+                        <div id="collapseOne" class="collapse"
+                            aria-labelledby="headingOne"
+                            data-parent="#accordionExample"> 
+                            <div class="card-body"> 
+                                <ul>
+                                    <li>
+                                        <label>Profil</label>
+                                        <select type="select" class="profil">
+                                            <option value="">Selectionner ici ...</option>
+                                            <option value="toMonochrome()">Monochrome</option>
+                                            <option value="grayScale()">Niveaux de gris</option>
+                                            <option value="toInverse()">Inverser les couleurs</option>
+                                            <option value="etalement()">Etalement dynamique</option>
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <label>Binarisation d'image</label>
+                                        <select type="select">
+                                            <option onclick="toBinSeuillage()">Par seuillage</option>
+                                            <option onclick="toBinOtsu()">Coût d'Otsu</option>
+                                        </select>
+                                    </li>
+                                     <li>
+                                        <label>Specification d'Histogramme</label>
+                                        <button class="btn btn-sm btn-success" onclick="runEgalisation()">Egalisation d'Histogramme</button>
+                                    </li>
+                                </ul> 
+                            </div> 
+                        </div> 
+                        <div class="card-header" id="headingTwo"> 
+                            <h2 class="mb-0"> 
+                                <button type="button"
+                                    class="btn btn-link collapsed"
+                                    data-toggle="collapse"
+                                    data-target="#collapseTwo"> 
+                                    <i class="fa fa-plus"></i> 
+                                    Transformations locales 
+                                </button> 
+                            </h2> 
+                        </div> 
+                        <div id="collapseTwo" class="collapse show"
+                            aria-labelledby="headingTwo"
+                            data-parent="#accordionExample"> 
+                            <div class="card-body"> 
+                                <ul>
+                                    <li>
+                                        <label>Filtrage linéaire</label>
+                                        <select id="filter" type="select">
+                                            <option onclick="filterImage(masque)">Convolution discrète</option>
+                                            <option onclick="filterImage(flouMoyen)">Filtre Moyen</option>
+                                            <option onclick="filterImage(flouGaussien)">Filtre Gaussien</option>
+                                        </select>
+                                    </li>
+                                </ul> 
+                            </div> 
+                        </div> 
+                        <div class="card-header" id="headingThree"> 
+                            <h2 class="mb-0"> 
+                                <button type="button"
+                                    class="btn btn-link collapsed"
+                                    data-toggle="collapse"
+                                    data-target="#collapseThree"> 
+                                    <i class="fa fa-plus"></i> 
+                                    Transformation du Plan
+                                </button>                      
+                            </h2> 
+                        </div> 
+                        <div id="collapseThree" class="collapse"
+                            aria-labelledby="headingThree"
+                            data-parent="#accordionExample"> 
+                            <div class="card-body"> 
+                                <ul>
+                                    <li>
+                                        <label>Symétries</label>
+                                        <select type="select">
+                                            <option onclick="retourneY()">Transformation verticale</option>
+                                            <option onclick="retourneX()">Transformation horizontale</option>
+                                        </select>
+                                    </li>
+                                </ul> 
+                            </div> 
+                        </div> 
+                </div> 
+    </div> 
+    <p class="pixels">Taille : <span class="widthImg"></span> x <span class="heightImg"></span> pixels</p>
+
+    <p class="loading">Traitement en cours...</p>
+    <p class="finished">Traitement Terminé</p>
+</div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
