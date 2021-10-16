@@ -100,6 +100,17 @@
                     filterImage(flouGaussien)
                 }
             })
+
+            $(document).on('change','.symetrie',function(){
+                let value = $(this).val()
+                if(value === "retourneX"){
+                    retourneX()
+                }
+
+                else if(value === "retourneY"){
+                    retourneY();
+                }
+            })
         }); 
     </script> 
 
@@ -223,9 +234,10 @@
                                 <ul>
                                     <li>
                                         <label>Symétries</label>
-                                        <select type="select">
-                                            <option onclick="retourneY()">Transformation verticale</option>
-                                            <option onclick="retourneX()">Transformation horizontale</option>
+                                        <select type="select" class="symetrie">
+                                            <option value="">Selectionner...</option>
+                                            <option value="retourneY">Transformation verticale</option>
+                                            <option value="retourneX">Transformation horizontale</option>
                                         </select>
                                     </li>
                                 </ul> 

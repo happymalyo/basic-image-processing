@@ -615,7 +615,7 @@ let yIndexFinal;
 function retourneX() {
   $('.finished').hide()
   currentPixels = originalPixels.slice()
-
+  console.log('Traitement en cours...')
   for (let y = 0; y < srcImage.height; y++) {
     for (let x = 0; x < srcImage.width; x++) {
 
@@ -640,12 +640,13 @@ function retourneX() {
   }
 
   commitChanges()
+  console.log('Traitement terminé')
 }
 /*RANDRIANANDRASANA Alain JOhny*/
 function retourneY() {
   $('.finished').hide()
   currentPixels = originalPixels.slice()
-
+  console.log('Traitement en cours...')
   for (let y = 0; y < srcImage.height; y++) {
     for (let x = 0; x < srcImage.width; x++) {
 
@@ -670,6 +671,7 @@ function retourneY() {
   }
 
   commitChanges()
+  console.log('Traitement terminé')
 }
 
 function getIndex(x, y) {
