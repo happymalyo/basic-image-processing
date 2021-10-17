@@ -66,6 +66,7 @@ srcImage.onload = function () {
   imgData = ctx.getImageData(0, 0, srcImage.width, srcImage.height)
   initialPixels = imgData.data
   originalPixels = imgData.data.slice()
+  $('#previewImg').waitMe('hide');
 }
 
 function commitChanges() {
